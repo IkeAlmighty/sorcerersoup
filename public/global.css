@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "GrapeNuts-regular";
+  src: url('/fonts/GrapeNuts-Regular.ttf');
+}
+
+body {
+  @apply text-xl;
+}
+
+h1 {
+  @apply text-6xl;
+  font-family: GrapeNuts-regular;
+}
+
+h2 {
+  @apply text-3xl;
+}
+
+.header {
+  font-family: GrapeNuts-regular;
+  @apply text-3xl;
+}
+
+button, input[type="button"], input[type="submit"] {
+  @apply border-2 border-black p-2 rounded;
+}
