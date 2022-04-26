@@ -1,11 +1,36 @@
 import clientPromise from "../../lib/mongodb";
 import { ObjectId } from "mongodb";
+import copy from "copy-to-clipboard";
+import { toast } from "react-toastify";
 import { useEffect } from "react";
-import { logToLocalHistory } from "../../lib/react-localhistory";
+import { logToLocalHistory } from "../../lib/hooks/react-localhistory";
+import useSocket from "../../lib/hooks/socketio";
 
-export default function GameTerminal() {
+export default function GameTerminal({ gameData }) {
   useEffect(logToLocalHistory, []);
-  return <div></div>;
+  const socketio = useSocket("gameterminals");
+
+  return (
+    <div>
+      {/* Game Link Copier and Display */}
+      <div className="text-sm mx-1 mb-10">
+        _id:
+        <span
+          className="text-blue-600 cursor-pointer mx-2"
+          onClick={() => {
+            copy(document.location); // copy to clipboard if pressed
+            toast("Game Link Copied to Clipboard!", {
+              autoClose: 900,
+              hideProgressBar: true,
+            });
+          }}
+        >
+          {gameData._id}
+        </span>
+      </div>
+      <h1></h1>
+    </div>
+  );
 }
 
 export async function getServerSideProps(context) {
