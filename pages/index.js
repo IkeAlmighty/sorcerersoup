@@ -58,6 +58,11 @@ export default function Home() {
               <button>Create GM Terminal</button>
             </Link>
           </div>
+          <div className="my-6">
+            <Link href="/itemcreator">
+              <button>Item Creator</button>
+            </Link>
+          </div>
 
           <div className="my-[200px]">
             <h2>Recently Visited on this Device:</h2>

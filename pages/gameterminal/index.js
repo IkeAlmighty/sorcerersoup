@@ -5,10 +5,20 @@ import { toast } from "react-toastify";
 import { useEffect } from "react";
 import { logToLocalHistory } from "../../lib/hooks/react-localhistory";
 import useSocket from "../../lib/hooks/socketio";
+import ItemCreator from "../../components/ItemCreator";
+import { useState } from "react/cjs/react.production.min";
 
 export default function GameTerminal({ gameData }) {
   useEffect(logToLocalHistory, []);
   const socketio = useSocket("gameterminals");
+
+  const VIEW_STATES = {
+    CHARACTER_CREATOR: CharacterCreator,
+    ITEM_CREATOR: ItemCreator,
+    SPELL_CREATOR: SpellCreator,
+    CHARACTER: Character,
+  };
+  const [currentView, setCurrentView] = useState();
 
   return (
     <div>
@@ -29,6 +39,7 @@ export default function GameTerminal({ gameData }) {
         </span>
       </div>
       <h1></h1>
+      <div className="p-3"></div>
     </div>
   );
 }
@@ -37,29 +48,34 @@ export async function getServerSideProps(context) {
   const { query } = context;
 
   let gameData = null;
-  const client = await clientPromise;
 
-  if (query._id) {
-    gameData = await client
-      .db()
-      .collection("gameterminals")
-      .findOne({ _id: ObjectId(query._id) });
-  }
+  try {
+    const client = await clientPromise;
 
-  // if no id was given or the gameData does not exist,
-  // then create the character and rerun this function with
-  // the query _id value set:
-  if (!gameData) {
-    const mongoInsertResponse = await client
-      .db()
-      .collection("gameterminals")
-      .insertOne({});
+    if (query._id) {
+      gameData = await client
+        .db()
+        .collection("gameterminals")
+        .findOne({ _id: ObjectId(query._id) });
+    }
 
-    return {
-      redirect: {
-        destination: `/gameterminal?_id=${mongoInsertResponse.insertedId.toString()}`,
-      },
-    };
+    // if no id was given or the gameData does not exist,
+    // then create the character and rerun this function with
+    // the query _id value set:
+    if (!gameData) {
+      const mongoInsertResponse = await client
+        .db()
+        .collection("gameterminals")
+        .insertOne({});
+
+      return {
+        redirect: {
+          destination: `/gameterminal?_id=${mongoInsertResponse.insertedId.toString()}`,
+        },
+      };
+    }
+  } catch (err) {
+    return { redirect: { destination: "/dberror" } };
   }
 
   // return the gameData, with the _id property converted

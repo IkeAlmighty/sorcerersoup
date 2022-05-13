@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: "GrapeNuts-regular";
-  src: url('/fonts/GrapeNuts-Regular.ttf');
+  src: url("/fonts/GrapeNuts-Regular.ttf");
 }
 
 body {
@@ -25,6 +25,13 @@ h2 {
   @apply text-3xl;
 }
 
-button, input[type="button"], input[type="submit"] {
+button,
+input[type="button"],
+input[type="submit"] {
   @apply border-2 border-black p-2 rounded;
+}
+
+input[type="button"],
+input[type="submit"]:hover {
+  @apply cursor-pointer;
 }
