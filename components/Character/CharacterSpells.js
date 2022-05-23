@@ -1,7 +1,7 @@
 import CollectionSearchBox from "../CollectionSearchBox";
 import Spell from "../Spell";
 
-export default function CharacterSpells({ spells, onChange }) {
+export default function CharacterSpells({ spells, onChange, hideSearchBar }) {
   return (
     <div>
       <div className="my-6">
@@ -10,13 +10,15 @@ export default function CharacterSpells({ spells, onChange }) {
         })}
       </div>
 
-      <CollectionSearchBox
-        collection="spells"
-        label="Add Spell"
-        onSelect={(newSpell) =>
-          onChange(Array.from(new Set([newSpell, ...spells])))
-        }
-      />
+      {!hideSearchBar && (
+        <CollectionSearchBox
+          collection="spells"
+          label="Add a spell"
+          onSelect={(newSpell) =>
+            onChange(Array.from(new Set([newSpell, ...spells])))
+          }
+        />
+      )}
     </div>
   );
 }

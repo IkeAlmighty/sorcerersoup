@@ -1,0 +1,33 @@
+.menu {
+  @apply fixed top-[56px] py-5 w-full h-full bg-amber-50 border-2 rounded;
+}
+
+.slideIn {
+  animation-name: slideIn;
+  animation-duration: 300ms;
+  left: 0;
+}
+
+.slideOut {
+  animation-name: slideOut;
+  animation-duration: 900ms;
+  left: 100vw;
+}
+
+@keyframes slideIn {
+  from {
+    left: 100vw;
+  }
+  to {
+    left: 0;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    left: 0;
+  }
+  to {
+    left: 100vw;
+  }
+}

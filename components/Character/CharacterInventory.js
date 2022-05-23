@@ -1,7 +1,11 @@
 import CollectionSearchBox from "../CollectionSearchBox";
 import Item from "../Item";
 
-export default function CharacterInventory({ inventory, onChange }) {
+export default function CharacterInventory({
+  inventory,
+  onChange,
+  hideSearchBar,
+}) {
   return (
     <div className="my-6">
       {inventory.map((item) => (
@@ -13,15 +17,17 @@ export default function CharacterInventory({ inventory, onChange }) {
         />
       ))}
 
-      <div className="my-6">
-        <CollectionSearchBox
-          collection="items"
-          label="Add Item to Inventory:"
-          onSelect={(item) =>
-            onChange(Array.from(new Set([item, ...inventory])))
-          }
-        />
-      </div>
+      {!hideSearchBar && (
+        <div className="my-6">
+          <CollectionSearchBox
+            collection="items"
+            label="Add Item to Inventory:"
+            onSelect={(item) =>
+              onChange(Array.from(new Set([item, ...inventory])))
+            }
+          />
+        </div>
+      )}
     </div>
   );
 }

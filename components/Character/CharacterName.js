@@ -6,6 +6,7 @@ export default function CharacterInventory({ value, onChange }) {
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        placeholder="Type a Name..."
       />
     </h1>
   );

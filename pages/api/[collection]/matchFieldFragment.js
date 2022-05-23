@@ -1,7 +1,7 @@
 import clientPromise from "../../../lib/mongodb";
 
 export default async function hander(req, res) {
-  const { fragment, collection, field } = req.query;
+  const { fragment, collection, field, gameTerminalId } = req.query;
 
   const client = await clientPromise;
   // FIXME: the following silenced code is
@@ -42,8 +42,16 @@ export default async function hander(req, res) {
   let fragmentMatches = [];
   for (let i = 0; i < allDocuments.length; i++) {
     const doc = allDocuments[i];
-    if (doc[field].match(new RegExp(fragment, "i"))) {
-      fragmentMatches.push(doc);
+    if (doc[field] && doc[field].match(new RegExp(fragment, "i"))) {
+      // if the game terminal is not defined, all matching docs are valid
+      if (gameTerminalId === undefined) {
+        fragmentMatches.push(doc);
+      } else {
+        // if the game terminal IS defined, then only add docs from that game terminal:
+        if (doc.gameTerminalId === gameTerminalId) {
+          fragmentMatches.push(doc);
+        }
+      }
     }
   }
 

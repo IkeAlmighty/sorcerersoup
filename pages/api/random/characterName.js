@@ -1,9 +1,9 @@
-import { uniqueNameGenerator, names } from "unique-names-generator";
+import { uniqueNamesGenerator, names } from "unique-names-generator";
 
-export default function RandomName() {
+export default function handler(req, res) {
   const config = { dictionaries: [names] };
-  const first = uniqueNameGenerator(config);
-  const last = uniqueNameGenerator(config);
+  const first = uniqueNamesGenerator(config);
+  const last = uniqueNamesGenerator(config);
 
   res.status(200).send(`${first} ${last}`);
 }

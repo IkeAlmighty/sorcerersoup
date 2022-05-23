@@ -1,5 +1,6 @@
 import clientPromise from "../../../lib/mongodb";
 
+// takes collection, tags (as a stringified array), and a limit
 export default async function handler(req, res) {
   const { collection } = req.query;
   const tags =

@@ -2,7 +2,7 @@ export default function Spell({ spellData }) {
   // console.log("spellData", spellData);
   return (
     <div>
-      <h2>{spellData?.name}</h2>
+      <h3>{spellData?.name}</h3>
 
       {spellData?.combatModifier && (
         <div className="text-sm">

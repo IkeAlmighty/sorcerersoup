@@ -10,11 +10,11 @@ export default function SearchBox({
   onSelect,
 }) {
   return (
-    <div className="">
+    <div>
       <label>
         <div>{label}</div>
         <input
-          className="p-2 block border mt-3 w-full"
+          className="p-2 block border w-full"
           type="search"
           value={searchFragment}
           placeholder="search..."

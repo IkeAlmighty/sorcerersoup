@@ -100,7 +100,7 @@ export default function ItemCreator() {
   }
 
   return (
-    <div className="max-w-md mx-auto p-3">
+    <div className="max-w-md p-3">
       <h1>Create an Item</h1>
 
       {/* 'form' for creating and item */}

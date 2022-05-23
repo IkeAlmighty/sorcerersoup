@@ -5,6 +5,7 @@ import Spell from "./Spell";
 
 import { calculateRollModifier } from "../lib/gameutilities";
 import TagAdderField from "./TagAdderField";
+import FancyRadioSelect from "./FancyRadioSelect";
 
 export default function SpellCreator() {
   const [searchSelection, setSearchSelection] = useState(undefined);
@@ -71,7 +72,7 @@ export default function SpellCreator() {
   }
 
   return (
-    <div className="p-3 max-w-md mx-auto">
+    <div className="p-3 max-w-md">
       <CollectionSearchBox
         label="Search Spells"
         collection="spells"
@@ -154,23 +155,23 @@ export default function SpellCreator() {
           <label>
             <div className="my-3">
               Spell Tier&nbsp;
-              <span className="mx-6 text-xs">
+              <div className="text-xs">
                 Spell damage for combat spells will be automatically assigned
                 based on tier.
-              </span>
+              </div>
             </div>
-            <select
-              className="w-full"
-              value={tier}
-              onChange={(e) => setTier(e.target.value)}
-            >
-              {[1, 2, 3, 4, 5, 6, 7].map((t) => (
-                <option key={t} className="text-right" value={t}>
-                  {t}
-                  {t === 1 ? " (Most Powerful)" : ""}
-                </option>
-              ))}
-            </select>
+            <FancyRadioSelect
+              options={[
+                { value: 1 },
+                { value: 2 },
+                { value: 3 },
+                { value: 4 },
+                { value: 5 },
+                { value: 6 },
+                { value: 7 },
+              ]}
+              onSelect={(val) => setTier(val)}
+            />
           </label>
         </div>
 
