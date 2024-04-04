@@ -5,6 +5,8 @@
 	let tiersSelected = { 3: true, 2: false, 1: false, S: false };
 	let searchBarValue;
 
+	let randomSpells = [];
+
 	filterSpells();
 
 	function toggleTiersSelectedAndFilter(tierToggles) {
@@ -60,62 +62,103 @@
 			});
 		});
 	}
+
+	function addRandomSpell() {
+		let newSpell = filteredData[Math.floor(Math.random() * filteredData.length)];
+		if (randomSpells.includes(newSpell)) return;
+		randomSpells = [...randomSpells, newSpell];
+	}
+
+	function removeSpellFromRandomSpells(spell) {
+		randomSpells = randomSpells.filter((s) => s !== spell);
+	}
 </script>
 
-<div class="center">
-	<input
-		type="text"
-		placeholder="Search Here"
-		bind:value={searchBarValue}
-		on:input={() => filterSpells()}
-	/>
-	<br />
+<div class="container">
+	<div class="center">
+		<input
+			type="text"
+			placeholder="Search Here"
+			bind:value={searchBarValue}
+			on:input={() => filterSpells()}
+		/>
+		<br />
 
-	<label>
-		<input
-			type="checkbox"
-			name="tier"
-			checked={tiersSelected[3]}
-			on:click={(e) => toggleTiersSelectedAndFilter([3])}
-		/>
-		Tier 3
-	</label>
-	<label>
-		<input
-			type="checkbox"
-			name="tier"
-			checked={tiersSelected[2]}
-			on:click={(e) => toggleTiersSelectedAndFilter([2])}
-		/>
-		Tier 2
-	</label>
-	<label>
-		<input
-			type="checkbox"
-			name="tier"
-			checked={tiersSelected[1]}
-			on:click={(e) => toggleTiersSelectedAndFilter([1])}
-		/>
-		Tier 1
-	</label>
-	<label>
-		<input
-			type="checkbox"
-			name="tier"
-			checked={tiersSelected['S']}
-			on:click={(e) => toggleTiersSelectedAndFilter(['S'])}
-		/>
-		Tier S
-	</label>
-</div>
+		<label>
+			<input
+				type="checkbox"
+				name="tier"
+				checked={tiersSelected[3]}
+				on:click={(e) => toggleTiersSelectedAndFilter([3])}
+			/>
+			Tier 3
+		</label>
+		<label>
+			<input
+				type="checkbox"
+				name="tier"
+				checked={tiersSelected[2]}
+				on:click={(e) => toggleTiersSelectedAndFilter([2])}
+			/>
+			Tier 2
+		</label>
+		<label>
+			<input
+				type="checkbox"
+				name="tier"
+				checked={tiersSelected[1]}
+				on:click={(e) => toggleTiersSelectedAndFilter([1])}
+			/>
+			Tier 1
+		</label>
+		<label>
+			<input
+				type="checkbox"
+				name="tier"
+				checked={tiersSelected['S']}
+				on:click={(e) => toggleTiersSelectedAndFilter(['S'])}
+			/>
+			Tier S
+		</label>
 
-{#each filteredData as spell}
-	<div class="spell-container">
-		<div>Spell Type: {spell['type']}</div>
-		<div>Mana Cost: {spell['mana cost'] || '--'}</div>
-		<div><span>Effect: </span>{spell.effect}</div>
+		<div>
+			<input type="button" value="Pick a Random Spell" on:click={addRandomSpell} />
+			{#if randomSpells.length > 0}
+				<input type="button" value="Clear" on:click={(e) => (randomSpells = [])} />
+			{/if}
+		</div>
 	</div>
-{/each}
+
+	{#if randomSpells.length > 0}
+		<div>Random Spell Set:</div>
+		<hr />
+	{/if}
+	{#each randomSpells as spell}
+		<div class="spell-container">
+			<div>Spell Type: {spell['type']}</div>
+			<div>Mana Cost: {spell['mana cost'] || '--'}</div>
+			<div><span>Effect: </span>{spell.effect}</div>
+			<input type="button" value="remove" on:click={() => removeSpellFromRandomSpells(spell)} />
+		</div>
+	{/each}
+
+	{#if randomSpells.length === 0}
+		<div>Search Results:</div>
+		<hr />
+		{#each filteredData as spell}
+			<div class="spell-container">
+				<div>Spell Type: {spell['type']}</div>
+				<div>Mana Cost: {spell['mana cost'] || '--'}</div>
+				<div><span>Effect: </span>{spell.effect}</div>
+				<input
+					type="button"
+					value="Start Random Set"
+					on:click={() => (randomSpells = [...randomSpells, spell])}
+				/>
+			</div>
+		{/each}
+	{/if}
+</div>
 
 <style>
 	input[type='text'] {
@@ -128,18 +171,23 @@
 		margin: auto auto;
 	}
 
+	input[type='button'] {
+		margin: 1rem auto;
+		padding: 0.5rem;
+	}
+
 	.center {
 		text-align: center;
-		max-width: 500px;
-		margin: auto auto;
 	}
 
 	.spell-container {
-		max-width: 500px;
 		margin: 2rem auto;
+		padding: 1rem 1rem 0 1rem;
+		border: 1px solid black;
 	}
 
-	.name {
-		font-weight: bold;
+	.container {
+		max-width: 412px;
+		margin: auto auto;
 	}
 </style>
