@@ -134,7 +134,7 @@
 		<hr />
 	{/if}
 	{#each randomSpells as spell}
-		<div class="spell-container">
+		<div class={`spell-container ${spell.type}-spell-type`}>
 			<div>Spell Type: {spell['type']}</div>
 			<div>Mana Cost: {spell['mana cost'] || '--'}</div>
 			<div><span>Effect: </span>{spell.effect}</div>
@@ -146,7 +146,7 @@
 		<div>Search Results:</div>
 		<hr />
 		{#each filteredData as spell}
-			<div class="spell-container">
+			<div class={`spell-container ${spell.type}-spell-type`}>
 				<div>Spell Type: {spell['type']}</div>
 				<div>Mana Cost: {spell['mana cost'] || '--'}</div>
 				<div><span>Effect: </span>{spell.effect}</div>
@@ -189,5 +189,21 @@
 	.container {
 		max-width: 412px;
 		margin: auto auto;
+	}
+
+	.Leveling-spell-type {
+		background-color: #defeff;
+	}
+
+	.Combat-spell-type {
+		background-color: #f7cdcd;
+	}
+
+	.Utility-spell-type {
+		background-color: #facaf8;
+	}
+
+	.Healing-spell-type {
+		background-color: #facaf8;
 	}
 </style>
