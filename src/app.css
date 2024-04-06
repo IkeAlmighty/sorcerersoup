@@ -1,0 +1,23 @@
+input[type='text'] {
+    display: block;
+    padding: 0.5rem;
+    width: 90%;
+    border: 1px solid black;
+    border-radius: 10px;
+    text-align: center;
+    margin: auto auto;
+}
+
+input[type='button'] {
+    margin: 1rem auto;
+    padding: 0.5rem;
+}
+
+.center {
+    text-align: center;
+}
+
+.container {
+    max-width: 412px;
+    margin: auto auto;
+}

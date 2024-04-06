@@ -1,4 +1,6 @@
 <script>
+	import SpellTile from '$lib/components/SpellTile.svelte';
+
 	export let data;
 
 	let filteredData = [];
@@ -134,76 +136,18 @@
 		<hr />
 	{/if}
 	{#each randomSpells as spell}
-		<div class={`spell-container ${spell.type}-spell-type`}>
-			<div>Spell Type: {spell['type']}</div>
-			<div>Mana Cost: {spell['mana cost'] || '--'}</div>
-			<div><span>Effect: </span>{spell.effect}</div>
-			<input type="button" value="remove" on:click={() => removeSpellFromRandomSpells(spell)} />
-		</div>
+		<SpellTile {spell} buttonText="Remove" onClick={() => removeSpellFromRandomSpells(spell)} />
 	{/each}
 
 	{#if randomSpells.length === 0}
 		<div>Search Results:</div>
 		<hr />
 		{#each filteredData as spell}
-			<div class={`spell-container ${spell.type}-spell-type`}>
-				<div>Spell Type: {spell['type']}</div>
-				<div>Mana Cost: {spell['mana cost'] || '--'}</div>
-				<div><span>Effect: </span>{spell.effect}</div>
-				<input
-					type="button"
-					value="Start Random Set"
-					on:click={() => (randomSpells = [...randomSpells, spell])}
-				/>
-			</div>
+			<SpellTile
+				{spell}
+				buttonText="Start Random Set"
+				onClick={() => (randomSpells = [...randomSpells, spell])}
+			/>
 		{/each}
 	{/if}
 </div>
-
-<style>
-	input[type='text'] {
-		display: block;
-		padding: 0.5rem;
-		width: 90%;
-		border: 1px solid black;
-		border-radius: 10px;
-		text-align: center;
-		margin: auto auto;
-	}
-
-	input[type='button'] {
-		margin: 1rem auto;
-		padding: 0.5rem;
-	}
-
-	.center {
-		text-align: center;
-	}
-
-	.spell-container {
-		margin: 2rem auto;
-		padding: 1rem 1rem 0 1rem;
-		border: 1px solid black;
-	}
-
-	.container {
-		max-width: 412px;
-		margin: auto auto;
-	}
-
-	.Leveling-spell-type {
-		background-color: #defeff;
-	}
-
-	.Combat-spell-type {
-		background-color: #f7cdcd;
-	}
-
-	.Utility-spell-type {
-		background-color: #facaf8;
-	}
-
-	.Healing-spell-type {
-		background-color: #facaf8;
-	}
-</style>
