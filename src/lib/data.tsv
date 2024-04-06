@@ -1,7 +1,7 @@
-symbol	pronunciation 	type	mana cost	effect			
+symbol	name	type	mana cost	effect			
 		U	0	Use the Enchant an Object action without rolling (regardless of your class). Pay the mana cost of the spell in health points instead of mana.			
 	Tame Beast	C	5	When casting this spell, if you rolled 7 or higher, target beast with less than 30 hp becomes your friend. It fights for you as an NPC.			
-		L	5	Touch any rock. You may store up to 20 mana from your current mana pool into this rock. You may retrieve this back to your current mana pool at anytime by touching the rock again.			
+		L	30	Touch any rock. Store 5 mana from your current mana pool into this rock. Mana in this rock can be retrieved anytime by anyone touching the rock.			
 		L	5	Cast on another party member. Next time they defeat an enemy in combat, their health is increased by 1d6 + 4			
 		U	5	turn grapes into wine			
 		U	5	unlock a locked door			
@@ -35,7 +35,7 @@ symbol	pronunciation 	type	mana cost	effect
 		C	20	The temperature within 100ft drops 30° F for the next 10 minutes. Everything (including you) takes 1d6 - 2 frost damage.			
 		C	20	Assault the mind of target within 30ft, dealing 1d6 + 2 psychic damage. Your target is unable to tell friend from foe apart on their next action, and simply attacks whoever is easiest for them to attack.			
 		C	20	Expand a magical aura of death in a 10ft radius. Each being within the aura takes 1d6 + 1 pyschic damage and subtracts one point from their next roll.			
-		L	20	Eat a rock. You take 1d6 - 3 damage. Increase your maximum health but that much as well. You may cast this spell no more than once a day.			
+		L	10	Eat a rock. You take 1d6 - 3 damage. Increase your maximum health but that much as well.			
 		U	20	Forcefully push your hands against the air surrounding you. You create a sonic boom, temporarily deafening the hearing of everyone except you within 100ft.			
 		U	20	Turn an object into ice (Does not work on living things).			
 		U	20	Summon a gust of wind that dramatically blows your hair around. You may add 1 point to your next manipulation check.			
@@ -71,7 +71,7 @@ symbol	pronunciation 	type	mana cost	effect
 		C	25	The Spirit of the Earth empowers you. If you are wielding a shovel, then deal 1d6 + 2 damage to target within 5ft. You can also dig ten times as fast for the next 5 minutes while using a shovel.			
 		C	30	Conjure a ball of plasma and send it rocketing towards something within 50ft, dealing 2d6 - 3 damage to it.			
 		C	30	Your nails temporarily grow to be 6 inches long and razor sharp. You may deal 1d6 + 4 damage to a target.			
-		C	30	Your fists become powerful. Deal 2d6 + 2 damage to a target.			
+		C	40	Your fists become powerful. Deal 2d6 + 2 damage to a target.			
 		C	30	Summon a pistol via an interdeminsional portal. You gain the action "Deal 2d6 - 3 damage to target within 100ft (negative damage becomes 0)." You may use this action 6 times, and then the pistol turns into orange goo.			
 		C	30	You become a conduit for electrical energy. Redirect electrical energy directed at you to a target within 20ft, dealing 1d6 damage to it.			
 		U	30	Open your third eye and look at a living being. You  see it's aura, and know exactly how much mana is in its current mana pool.			
@@ -146,9 +146,44 @@ symbol	pronunciation 	type	mana cost	effect
 	Demiplane	U	200	Open up a temporary rift in space time that leads your own 500 acre demiplane populated with plants and animals of your choice. Anybody within may exit it at anytime, but the entrance will collapse after 5 minutes. Cast this spell again to regain access.			
 		C	350	Your eyes glow blue and for 5 minutes or the next 5 actions you become the master of all 4 elements: water, air, earth, fire. You can fly. While this effect is active, you may take the action "Bend the elements, deal 5d6 + 10 damage to an enemy within 200ft".			
 		C	3x	Deal 1d6 + x damage, where x is the number of enemies you've killed in combat with this spell.			
-		C		You need a handful of salt to cast this spell. The salt crystals temporarily stick to the blade of a weapon before disintegrating. Swing the weapon at an enemy in range, dealing 1d6 + 2 damage. Add one d6 if the enemy is airborne.			
-		C		Eat a cup of sugar. You feel a burst of strength. Add 1d6 to your next two Fight, without Magic actions you take. If you're a grunt, you may add the d6 to Fight Like an Animal instead.			
-		C		In order to cast this spell, you need to touch the ground with both hands. Summon an earth spirit with 50 maximum and current hp. Its initiative is one point higher than your own, you control it, and it has the Move action as well as the Fight Like an Animal action.			
+		C	25	You need a handful of salt to cast this spell. The salt crystals temporarily stick to the blade of a weapon before disintegrating. Swing the weapon at an enemy in range, dealing 1d6 + 2 damage. Add one d6 if the enemy is airborne.			
+		C	25	Eat a cup of sugar. You feel a burst of strength. Add 1d6 to your next two Fight, without Magic actions you take. If you're a grunt, you may add the d6 to Fight Like an Animal instead.			
+		C	50	In order to cast this spell, you need to touch the ground with both hands. Summon an earth spirit with 50 maximum and current hp. Its initiative is one point higher than your own, you control it, and it has the Move action as well as the Fight Like an Animal action.			
 		C	30	All cutlery in a 50ft radius flies towards you and sticks together to form the One for All Fork of Destiny. You may use the One for All Fork of Destiny as an action, dealing 1d6 + 4 damage to target within 10ft.			
 			15	Catch a butterfly alive. When you do, grow butterfly wings. They last for 10 minutes, and you may fly and add 20ft to your movement while you have them.			
-			25	For each coffee or tea cup you are holding, become empowered with strength. For the next 5 minutes, you gain the action "Coffee Karate: Deal 1d6 + x damage, where x is the number of coffee cups you are holding".			
+		C	25	For each coffee or tea cup you are holding, become empowered with strength. For the next 5 minutes, you gain the action "Coffee Karate: Deal 1d6 + x damage, where x is the number of coffee cups you are holding".			
+			25	Fling target within 5ft 20ft into the air. It lands when your turn is over, taking 7 damage.			
+			25	Gain 3d6 + 50 maximum and current health, but you cannot cast combat spells. This effect ends when combat is over.			
+			50	Before casting this spell, place two objects related to your special interest up to 20ft from each other. Create a wall with 3d6 + 10 health points between the two objects. The objects are destroyed, unfortunately.			
+		U	50	Channel the Spirit of the Time Chronicler. Take three actions immediately.			
+		C	0	Take 10 damage. Deal 2d6 + 3 vampiric damage to a target within 5ft.			
+		C	20	For each lit candle in a 20ft radius, deal 3 damage to a target also within 20ft.			
+		L	5	Next time you try to catch a fish, a large bloodthirsty shark spirit attacks you. It has 3d6 + 10 health points and has the action "Roll 2d6. On 5 or higher, deal 2d6 + 5 damage to target within 5ft of water." If you defeat this spirit shark, you gain 10 mana.			
+		L	0	Die. When you do, target within sight instantly learns every spell you know, and adds your maximum mana and current mana to their current and maximum mana for 5 minutes.			
+		U	25	You sway the loyalty of target you can talk to. For the next 5 minutes, your target attempts to Manipulate their allies to your course of action using the Manipulate action.			
+		U	300	Summon the Rug of the Wanderer. While in possession of this rug, you may fly on it. Your movement speed while flying is 40ft.			
+		U	100	You may subtract 300 mana from the cost of the next spell you cast.			
+		L	100	Touch a Legendary enchanted item. It disentigrates, and you gain 25 maximum mana, plus an additional 10 for each spell that was on the item.			
+		L	100	Summon the Hammer of the Divine Smith. When wielding this hammer, if you enchant an object you gain 30 maximum mana.			
+		L	25	Touch a legendary enchanted object. You may store up to 50 mana in it, to be removed again at anytime as long you are touching the object.			
+		U	15	Manipulate a body of water you can see up to 5ft in radius with your mind. You can move it around and even lift it into the air.			
+		L	15	Eat a enchanted apple. Your maximum health and maximum mana are both increased by 5.			
+		L	15	The Spirit of the Scholar greets you! When you learn this spell, gain 40 maximum mana.			
+		L	15	The Spirit of the Warrior screams within you. When you learn this spell, gain 25 maximum health.			
+		L	100	Choose another character within sight. The next spell you learn, that character learns as well.			
+		H	30	Take 1d6 + 4 damage, and heal that much of another character's health within 50ft			
+		C	25	The next damaging attack against you is deflected onto two of your allies. You may divvy up the damage as you please.			
+		H	40	Deal 2d6 + 8 damage to target that has 20 or less maximum health. Heal target within sight for that much as well.			
+		U	25	Your coat becomes animated by your will, can float, and can lift you up to five feet into the air. This lasts for 30 minutes, or an entire day of of an NPC compliments your coat.			
+		U	15	You channel the Spirit of the Clear Sky. For the next 30 minutes, you may add one point to any roll you make as long as the sun shines upon you.			
+		U	20	Choose an enchantment where the original spell cost less than 25 mana. Next time you use that enchantment, you do not need to roll for success.			
+		U	250	Cast every spell on an enchanted object at once. You do not need to roll for success for any of them. 			
+		L	15	Next time you successfully Manipulate Someone, add 5 mana to your maximum and minimum mana.			
+		L	15	Next time you successfully Do Something Really Hard, add 20 mana to your current and maximum mana.			
+		L	15	You are cursed by the Demon of Wealth. You can no longer gain maximum mana, and your maximum mana is equal to the number of silver pieces you are carrying at any given time. Whenever you cast a spell, disintegrate a number of these silver pieces equal to the mana cost for the spell instead of paying mana.			
+		L	25	Give half your maximum and current mana to another character that you can touch.			
+		U	x	Give x current mana to target character you can see.			
+		U	25	Each time you fail to Cast a Spell, gain a point of disappointment. You may choose to use all of your points of disappointment to modify the success roll of Cast a Spell in the future. Once you do, you must recast this spell to use them again.			
+		U	25	You are blessed by the Spirit of the Dragon. Anytime you cast a damaging fire spell, you may add 2x damage, x being the number of different dragons you've had battled.			
+		U	150	Each turn, take 1d6 + 3 actions instead of the normal amount. Your current health is lowered to 35.			
+		U	15	With the informed consent of target character, you may wipe a spell they have learned from their mind and add it to your learned spells.			
