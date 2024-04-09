@@ -74,6 +74,18 @@
 	function removeSpellFromRandomSpells(spell) {
 		randomSpells = randomSpells.filter((s) => s !== spell);
 	}
+
+	function copySpellsToClipboard(spells) {
+		let formattedSpellList = '';
+
+		spells.forEach((spell) => {
+			formattedSpellList += `\n\n## ${spell.name || 'Unnamed Spell'}\n*Mana Cost:* ${spell['mana cost']}\n*Effect:* ${spell.effect}`;
+		});
+
+		navigator.clipboard
+			.writeText(formattedSpellList)
+			.then(() => alert('Copied Spell List to Clipboard'));
+	}
 </script>
 
 <div class="container">
@@ -149,5 +161,19 @@
 				onClick={() => (randomSpells = [...randomSpells, spell])}
 			/>
 		{/each}
+	{/if}
+
+	{#if randomSpells.length > 0}
+		<input
+			type="button"
+			value="Copy Markdown to Clipboard"
+			on:click={() => copySpellsToClipboard(randomSpells)}
+		/>
+	{:else}
+		<input
+			type="button"
+			value="Copy Markdown to Clipboard"
+			on:click={() => copySpellsToClipboard(filteredData)}
+		/>
 	{/if}
 </div>
