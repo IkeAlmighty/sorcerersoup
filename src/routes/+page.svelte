@@ -272,16 +272,18 @@ Secret Connection: \n${secretConnection}\n
 	</div>
 	<textarea bind:value={secretConnection}></textarea>
 
-	<div class="my-2">
-		Please press the button to copy your character sheet to your clipboard. You can paste it in
-		Discord for the gobblygook to go away:
-	</div>
+	{#if name && gender && selectedVice && backstory && viceExplanation && characterClass && age && specialInterest && secretConnection}
+		<div class="my-2">
+			Please press the button to copy your character sheet to your clipboard. You can paste it in
+			Discord for the gobblygook to go away:
+		</div>
 
-	<input
-		type="button"
-		value="Copy Character Sheet to Clipboard"
-		on:click={copyCharacterToClipboard}
-	/>
+		<input
+			type="button"
+			value="Copy Character Sheet to Clipboard"
+			on:click={copyCharacterToClipboard}
+		/>
+	{/if}
 </div>
 
 <style>
