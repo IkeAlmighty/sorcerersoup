@@ -1,179 +1,308 @@
 <script>
-	import SpellTile from '$lib/components/SpellTile.svelte';
+	// import { browser } from '$app/environment';
 
-	export let data;
+	let name;
+	let gender;
+	let age;
+	let characterClass;
+	let specialInterest;
+	let specialInterestFillInBlank;
 
-	let filteredData = [];
-	let tiersSelected = { 3: true, 2: false, 1: false, S: false };
-	let searchBarValue;
+	let viceExplanation;
+	let backstory;
+	let secretConnection;
 
-	let randomSpells = [];
+	let selectedVice;
+	let vices = [
+		'Gluttony',
+		'Envy',
+		'Anger',
+		'Lust',
+		'Sloth',
+		'Alcohol',
+		'Avarice',
+		'Greed',
+		'Pride',
+		'Smoking',
+		'Wrath',
+		'Addiction',
+		'Arrogance',
+		'Corruption',
+		'Gamblin’'
+	];
 
-	filterSpells();
+	// function storeLocallyOnChange(...args) {
+	// 	args.forEach((value) => browser && localStorage.setItem([value], value));
 
-	function toggleTiersSelectedAndFilter(tierToggles) {
-		// toggle checkbox if this function was triggered by clicking one:
-		tierToggles.forEach((tier) => (tiersSelected[tier] = !tiersSelected[tier]));
-		filterSpells();
+	// 	browser && console.log(localStorage.getItem('name'));
+	// }
+
+	// $: storeLocallyOnChange(
+	// 	name,
+	// 	gender,
+	// 	age,
+	// 	characterClass,
+	// 	specialInterest,
+	// 	viceExplanation,
+	// 	backstory,
+	// 	secretConnection,
+	// 	selectedVice
+	// );
+
+	function selectClass(e) {
+		characterClass = e.target.value;
 	}
 
-	function filterSpellsByTier() {
-		let filtered = data.data.filter((spell) => {
-			function determineSpellTier(s) {
-				let manaCost = s['mana cost'];
-				if (!manaCost) return 'S';
-				else if (manaCost < 50) return 3;
-				else if (manaCost < 75) return 2;
-				else if (manaCost < 150) return 1;
-				else return 'S';
-			}
-
-			let tier = determineSpellTier(spell);
-			return tiersSelected[tier];
-		});
-
-		return filtered;
+	function chooseAge() {
+		age = Math.floor(Math.random() * 100) + 17;
 	}
 
-	function filterSpellsBySearchbar() {
-		// if the searchbar is empty, then reset the list and return
-		if (!searchBarValue || searchBarValue.length === 0) return data.data;
+	function calcMana() {
+		if (!characterClass) return 0;
 
-		//start out with all spells
-		let filtered = data.data;
-		let words = searchBarValue.toLowerCase();
-
-		//filter out spells that don't have a word match
-		filtered = data.data.filter((spell) => {
-			let keywords = JSON.stringify(spell).toLowerCase();
-			return keywords.includes(words);
-		});
-
-		return filtered;
+		switch (characterClass) {
+			case 'Artificer':
+				return 75;
+			case 'Priest':
+				return 75;
+			case 'Demigod':
+				return 200;
+			case 'Tinkermage':
+				return 55;
+			case 'Grunt':
+				return 50;
+			case 'Normie':
+				return -300;
+		}
 	}
 
-	function filterSpells() {
-		let filteredBySearchBar = filterSpellsBySearchbar();
-		let filteredByTier = filterSpellsByTier();
+	function calcHealth() {
+		if (!characterClass) return 0;
 
-		filteredData = [];
-
-		filteredBySearchBar.forEach((searchBarSpell) => {
-			filteredByTier.forEach((tierSpell) => {
-				if (searchBarSpell === tierSpell) filteredData.push(searchBarSpell);
-			});
-		});
+		switch (characterClass) {
+			case 'Artificer':
+				return 50;
+			case 'Priest':
+				return 50;
+			case 'Demigod':
+				return 35;
+			case 'Tinkermage':
+				return 50;
+			case 'Grunt':
+				return 60;
+			case 'Normie':
+				return 50;
+		}
 	}
 
-	function addRandomSpell() {
-		let newSpell = filteredData[Math.floor(Math.random() * filteredData.length)];
-		if (randomSpells.includes(newSpell)) return;
-		randomSpells = [...randomSpells, newSpell];
-	}
-
-	function removeSpellFromRandomSpells(spell) {
-		randomSpells = randomSpells.filter((s) => s !== spell);
-	}
-
-	function copySpellsToClipboard(spells) {
-		let formattedSpellList = '';
-
-		spells.forEach((spell) => {
-			formattedSpellList += `\n\n## ${spell.name || 'Unnamed Spell'}\n*Mana Cost:* ${spell['mana cost']}\n*Effect:* ${spell.effect}`;
-		});
+	function copyCharacterToClipboard() {
+		let character = `
+## ${name}
+Gender: ${gender}
+Class: ${characterClass}\n
+Current/Max Mana: \t\t / ${calcMana()}
+Current/Max Health: \t\t / ${calcHealth()}\n
+Special Interest: ${specialInterest}
+Vice: ${selectedVice}
+Explanation: \n${viceExplanation}\n
+Backstory: \n${backstory}\n
+Secret Connection: \n${secretConnection}\n
+        `;
 
 		navigator.clipboard
-			.writeText(formattedSpellList)
-			.then(() => alert('Copied Spell List to Clipboard'));
+			.writeText(character)
+			.then(() => alert('Character sheet copied to clipboard!'));
 	}
 </script>
 
 <div class="container">
-	<div class="center">
-		<input
-			type="text"
-			placeholder="Search Here"
-			bind:value={searchBarValue}
-			on:input={() => filterSpells()}
-		/>
-		<br />
-
+	<div><input type="text" bind:value={name} placeholder="write name here" /></div>
+	<div><input type="text" bind:value={gender} placeholder="write gender here" /></div>
+	<div class="mt-2">
+		<b>AGE:</b>
+		{#if !age}
+			<input type="button" value={`Click to "Choose" Age`} on:click={chooseAge} />
+		{:else}{age} years old.{/if}
+	</div>
+	<div class="mt-2">Choose a <b>CLASS</b>:</div>
+	<div>
 		<label>
 			<input
-				type="checkbox"
-				name="tier"
-				checked={tiersSelected[3]}
-				on:click={(e) => toggleTiersSelectedAndFilter([3])}
+				type="radio"
+				name="chClass"
+				checked={characterClass === 'Artificer'}
+				value="Artificer"
+				on:change={selectClass}
 			/>
-			Tier 3
+			<b>Artificer</b> (can inscribe glyphs on objects for any party member to use)
 		</label>
 		<label>
 			<input
-				type="checkbox"
-				name="tier"
-				checked={tiersSelected[2]}
-				on:click={(e) => toggleTiersSelectedAndFilter([2])}
+				type="radio"
+				name="chClass"
+				checked={characterClass === 'Demigod'}
+				value="Demigod"
+				on:change={selectClass}
 			/>
-			Tier 2
+			<b>Demigod</b> (starts with a massive mana pool and array of combat spells)
 		</label>
 		<label>
 			<input
-				type="checkbox"
-				name="tier"
-				checked={tiersSelected[1]}
-				on:click={(e) => toggleTiersSelectedAndFilter([1])}
+				type="radio"
+				name="chClass"
+				checked={characterClass === 'Tinkermage'}
+				value="Tinkermage"
+				on:change={selectClass}
 			/>
-			Tier 1
+			<b>Tinkermage</b> (can learn new spells quickly, but starts with a small mana pool)
 		</label>
 		<label>
 			<input
-				type="checkbox"
-				name="tier"
-				checked={tiersSelected['S']}
-				on:click={(e) => toggleTiersSelectedAndFilter(['S'])}
+				type="radio"
+				name="chClass"
+				checked={characterClass === 'Priest'}
+				value="Priest"
+				on:change={selectClass}
 			/>
-			Tier S
+			<b>Priest</b> (starts with an array of healing spells and can communicate well with locals)
 		</label>
-
-		<div>
-			<input type="button" value="Pick a Random Spell" on:click={addRandomSpell} />
-			{#if randomSpells.length > 0}
-				<input type="button" value="Clear" on:click={(e) => (randomSpells = [])} />
-			{/if}
-		</div>
+		<label>
+			<input
+				type="radio"
+				name="chClass"
+				checked={characterClass === 'Grunt'}
+				value="Grunt"
+				on:change={selectClass}
+			/>
+			<b>Grunt</b> (is very physically capable)
+		</label>
+		<label>
+			<input
+				type="radio"
+				name="chClass"
+				checked={characterClass === 'Normie'}
+				value="Normie"
+				on:change={selectClass}
+			/>
+			<b>Normie</b> (Unable to vocalize spells or use mana… kinda useless? Idk why you chose this)
+		</label>
 	</div>
 
-	{#if randomSpells.length > 0}
-		<div>Random Spell Set:</div>
-		<hr />
-	{/if}
-	{#each randomSpells as spell}
-		<SpellTile {spell} buttonText="Remove" onClick={() => removeSpellFromRandomSpells(spell)} />
-	{/each}
-
-	{#if randomSpells.length === 0}
-		<div>Search Results:</div>
-		<hr />
-		{#each filteredData as spell}
-			<SpellTile
-				{spell}
-				buttonText="Start Random Set"
-				onClick={() => (randomSpells = [...randomSpells, spell])}
+	<div class="mt-2">
+		Pick a <b>SPECIAL INTEREST:</b>
+		<label>
+			<input
+				type="radio"
+				name="specialInterest"
+				checked={specialInterest === 'Mushrooms'}
+				value="Mushrooms"
+				on:change={(e) => (specialInterest = e.target.value)}
 			/>
-		{/each}
-	{/if}
+			Mushrooms
+		</label>
 
-	{#if randomSpells.length > 0}
-		<input
-			type="button"
-			value="Copy Markdown to Clipboard"
-			on:click={() => copySpellsToClipboard(randomSpells)}
-		/>
-	{:else}
-		<input
-			type="button"
-			value="Copy Markdown to Clipboard"
-			on:click={() => copySpellsToClipboard(filteredData)}
-		/>
-	{/if}
+		<label>
+			<input
+				type="radio"
+				name="specialInterest"
+				checked={specialInterest === 'Trains'}
+				value="Trains"
+				on:change={(e) => (specialInterest = e.target.value)}
+			/>
+			Trains
+		</label>
+
+		<label>
+			<input
+				type="radio"
+				name="specialInterest"
+				checked={specialInterest === 'Frogs'}
+				value="Frogs"
+				on:change={(e) => (specialInterest = e.target.value)}
+			/>
+			Frogs
+		</label>
+
+		<label>
+			<input
+				type="radio"
+				name="specialInterest"
+				checked={specialInterest === specialInterestFillInBlank}
+				value={specialInterestFillInBlank}
+				on:change={(e) => (specialInterest = e.target.value)}
+			/>
+
+			<input
+				type="text"
+				bind:value={specialInterestFillInBlank}
+				placeholder="(or fill in the blank)"
+			/>
+		</label>
+	</div>
+
+	<div class="mt-2">Choose a <b>VICE:</b></div>
+	<div class="vice-container">
+		{#each vices as vice}
+			<div>
+				<label>
+					<input
+						type="radio"
+						value={vice}
+						checked={selectedVice === vice}
+						on:change={(e) => (selectedVice = e.target.value)}
+					/>
+					{vice}
+				</label>
+			</div>
+		{/each}
+	</div>
+
+	<div class="my-2">Explain yourself:</div>
+	<textarea style="min-height: 75px" bind:value={viceExplanation}></textarea>
+
+	<div class="my-2">
+		Write a short <b>BACKSTORY</b>, if you didn't already write a long one for the last question:
+	</div>
+	<textarea bind:value={backstory}></textarea>
+
+	<div class="my-2">
+		Choose another member of your party. Write down how you (your character, not you in real life)
+		knows them, aka your <b>SECRET CONNECTION</b>. Maybe check in with that member, make sure your
+		story makes sense and doesn’t offend them too much.
+	</div>
+	<textarea bind:value={secretConnection}></textarea>
+
+	<div class="my-2">
+		Please press the button to copy your character sheet to your clipboard. You can paste it in
+		Discord for the gobblygook to go away:
+	</div>
+
+	<input
+		type="button"
+		value="Copy Character Sheet to Clipboard"
+		on:click={copyCharacterToClipboard}
+	/>
 </div>
+
+<style>
+	label {
+		display: block;
+		margin: 0.5rem auto;
+	}
+
+	input {
+		margin: 0.5rem auto;
+		display: inline-block;
+		padding: 0.5rem;
+	}
+
+	.vice-container {
+		display: grid;
+		grid-template-columns: 33% 33% 33%;
+	}
+
+	textarea {
+		width: 100%;
+		min-height: 175px;
+	}
+</style>
