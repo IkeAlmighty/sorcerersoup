@@ -1,6 +1,4 @@
 <script>
-	// import { browser } from '$app/environment';
-
 	let name;
 	let gender;
 	let age;
@@ -30,24 +28,6 @@
 		'Corruption',
 		'Gamblin’'
 	];
-
-	// function storeLocallyOnChange(...args) {
-	// 	args.forEach((value) => browser && localStorage.setItem([value], value));
-
-	// 	browser && console.log(localStorage.getItem('name'));
-	// }
-
-	// $: storeLocallyOnChange(
-	// 	name,
-	// 	gender,
-	// 	age,
-	// 	characterClass,
-	// 	specialInterest,
-	// 	viceExplanation,
-	// 	backstory,
-	// 	secretConnection,
-	// 	selectedVice
-	// );
 
 	function selectClass(e) {
 		characterClass = e.target.value;
