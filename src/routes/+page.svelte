@@ -1,4 +1,9 @@
 <script>
+	import { browser } from '$app/environment';
+	import { onMount } from 'svelte';
+
+	onMount(() => console.log('characterJSON: ', window.localStorage.getItem('characterJSON')));
+
 	let name;
 	let gender;
 	let age;
@@ -28,6 +33,30 @@
 		'Corruption',
 		'Gamblin’'
 	];
+
+	let characterJSON = {};
+	$: characterJSON = {
+		name,
+		gender,
+		age,
+		characterClass,
+		specialInterest,
+		viceExplanation,
+		backstory,
+		secretConnection,
+		vice: selectedVice
+	};
+
+	$: locallyStoreCharacterJSON(characterJSON);
+
+	function locallyStoreCharacterJSON(json) {
+		if (!browser) return; // only run on the frontend
+
+		console.log('storing!');
+
+		// overwrite characterJSON to match the current value:
+		window.localStorage.setItem('characterJSON', JSON.stringify(json));
+	}
 
 	function selectClass(e) {
 		characterClass = e.target.value;
@@ -246,6 +275,11 @@ Secret Connection: \n${secretConnection}\n
 	<textarea bind:value={backstory}></textarea>
 
 	<div class="my-2">
+		<b>Pause and wait</b> for all of the other players to catch up. Before writing your secret connection,
+		everybody should share the what they have so far about their character.
+	</div>
+
+	<div class="my-2">
 		Choose another member of your party. Write down how you (your character, not you in real life)
 		knows them, aka your <b>SECRET CONNECTION</b>. Maybe check in with that member, make sure your
 		story makes sense and doesn’t offend them too much.
@@ -253,7 +287,7 @@ Secret Connection: \n${secretConnection}\n
 	<textarea bind:value={secretConnection}></textarea>
 
 	{#if name && gender && selectedVice && backstory && viceExplanation && characterClass && age && specialInterest && secretConnection}
-		<div class="my-2">
+		<!-- <div class="my-2">
 			Please press the button to copy your character sheet to your clipboard. You can paste it in
 			Discord for the gobblygook to go away:
 		</div>
@@ -262,7 +296,7 @@ Secret Connection: \n${secretConnection}\n
 			type="button"
 			value="Copy Character Sheet to Clipboard"
 			on:click={copyCharacterToClipboard}
-		/>
+		/> -->
 	{/if}
 </div>
 
