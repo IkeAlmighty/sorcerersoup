@@ -1,15 +1,15 @@
 <script>
-	export let characterJSON;
+	export let characterObject;
 
-	$: name = characterJSON.name;
-	$: gender = characterJSON.gender;
-	$: age = characterJSON.age;
-	$: characterClass = characterJSON.characterClass;
-	$: specialInterest = characterJSON.specialInterest;
-	$: vice = characterJSON.vice;
-	$: viceExplanation = characterJSON.viceExplanation;
-	$: backstory = characterJSON.backstory;
-	$: secretConnection = characterJSON.secretConnection;
+	$: name = characterObject.name;
+	$: gender = characterObject.gender;
+	$: age = characterObject.age;
+	$: characterClass = characterObject.characterClass;
+	$: specialInterest = characterObject.specialInterest;
+	$: vice = characterObject.vice;
+	$: viceExplanation = characterObject.viceExplanation;
+	$: backstory = characterObject.backstory;
+	$: secretConnection = characterObject.secretConnection;
 </script>
 
 <div>

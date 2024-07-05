@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import SpellTile from '$lib/components/spells/SpellTile.svelte';
+	import { json } from '@sveltejs/kit';
 
 	export let spells;
 	export let selectedSpells = [];
@@ -57,19 +58,16 @@
 
 	function toggleTiersSelectedAndFilter(tierToggles) {
 		// toggle checkbox if this function was triggered by clicking one:
-		tierToggles.forEach((tier) => (tiersSelected[tier] = !tiersSelected[tier]));
-		// filterSpells();
+		tierToggles.forEach((toggle) => {
+			tiersSelected[toggle] = !tiersSelected[toggle];
+		});
 	}
 
 	function toggleSpellTypeAndFilter(spellType) {
-		// console.log(!spellTypesSelected[spellType]);
 		spellTypesSelected[spellType] = !spellTypesSelected[spellType];
-		// filterSpells();
 	}
 
 	function matchesSearchBarValue(spell) {
-		console.log(searchBarValue);
-
 		if (!searchBarValue || searchBarValue.length === 0) return true;
 
 		let keywords = JSON.stringify(spell).toLowerCase();
@@ -92,23 +90,16 @@
 	}
 
 	function matchesAllowedTypes(spell) {
-		// update selectedTypes to reflect allowableTypes
-		spellTypesSelected = {
-			Combat: allowableFilters['Combat'],
-			Healing: allowableFilters['Healing'],
-			Leveling: allowableFilters['Leveling'],
-			Utility: allowableFilters['Utility']
-		};
+		return allowableFilters[spell.type];
+	}
 
+	function matchesSpellTypesSelected(spell) {
 		return spellTypesSelected[spell.type];
 	}
 
 	function filterSpells(..._dependencies) {
-		console.log('filtering spells...');
-
 		filteredData = spells.reduce((matches, spell) => {
 			// first, filter by search bar
-			console.log('matches search bar:', matchesSearchBarValue(spell), JSON.stringify(spell));
 			if (!matchesSearchBarValue(spell)) return matches;
 
 			// 2nd, filter by tier
@@ -116,6 +107,9 @@
 
 			// 3rd, filter by allowed type
 			if (!matchesAllowedTypes(spell)) return matches;
+
+			// 4th, filter by user selected spell types
+			if (!matchesSpellTypesSelected(spell)) return matches;
 
 			// else
 			return [...matches, spell];
@@ -126,6 +120,7 @@
 
 	function addRandomSpell() {
 		let newSpell = filteredData[Math.floor(Math.random() * filteredData.length)];
+		if (!newSpell) return;
 		if (selectedSpells.includes(newSpell)) return;
 		selectedSpells = [...selectedSpells, newSpell];
 	}
@@ -202,7 +197,7 @@
 		{#each filteredData as spell}
 			<SpellTile
 				{spell}
-				buttonText="Start Random Set"
+				buttonText="Pick as First Spell"
 				onClick={() => (selectedSpells = [...selectedSpells, spell])}
 			/>
 		{/each}

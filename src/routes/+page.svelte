@@ -38,15 +38,20 @@
 		'Gamblin’'
 	];
 
-	$: allowableSpellFilters = calcCharacterSpellFilters(characterClass, characterSpells);
+	$: defaultFilters = calcCharacterSpellFilters(characterClass, characterSpells);
 
 	let characterSpells = [];
 
-	let characterJSON = {};
-	$: characterJSON = {
+	$: startHealth = calcHealth(characterClass);
+	$: startMana = calcMana(characterClass);
+
+	let characterObject = {};
+	$: characterObject = {
 		name,
 		gender,
 		age,
+		startHealth,
+		startMana,
 		characterClass,
 		specialInterest,
 		viceExplanation,
@@ -55,12 +60,12 @@
 		vice: selectedVice
 	};
 
-	$: locallyStoreCharacterJSON(characterJSON);
+	$: locallyStoreCharacterJSON(characterObject);
 
 	function locallyStoreCharacterJSON(json) {
 		if (!browser) return; // only run on the frontend
 
-		// overwrite characterJSON to match the current value:
+		// overwrite characterObject to match the current value:
 		window.localStorage.setItem('characterJSON', JSON.stringify(json));
 	}
 
@@ -72,10 +77,10 @@
 		age = Math.floor(Math.random() * 100) + 17;
 	}
 
-	function calcMana() {
-		if (!characterClass) return 0;
+	function calcMana(_characterClass) {
+		if (!_characterClass) return 0;
 
-		switch (characterClass) {
+		switch (_characterClass) {
 			case 'Artificer':
 				return 75;
 			case 'Priest':
@@ -91,10 +96,10 @@
 		}
 	}
 
-	function calcHealth() {
-		if (!characterClass) return 0;
+	function calcHealth(_characterClass) {
+		if (!_characterClass) return 0;
 
-		switch (characterClass) {
+		switch (_characterClass) {
 			case 'Artificer':
 				return 50;
 			case 'Priest':
@@ -111,10 +116,8 @@
 	}
 
 	function calcCharacterSpellFilters(..._dependencies) {
-		console.log('calculating filters');
 		let filters = {};
 
-		console.log('character class:', characterClass);
 		switch (characterClass) {
 			case 'Artificer':
 				filters = {
@@ -129,7 +132,16 @@
 				};
 				break;
 			case 'Priest':
-				filters = {};
+				filters = {
+					3: true,
+					2: false,
+					1: false,
+					S: false,
+					Combat: true,
+					Healing: true,
+					Leveling: true,
+					Utility: true
+				};
 				break;
 			case 'Demigod':
 				filters = {};
@@ -145,7 +157,6 @@
 				break;
 		}
 
-		console.log('new filters:', filters);
 		return filters;
 	}
 
@@ -190,7 +201,14 @@ Secret Connection: \n${secretConnection}\n
 				value="Artificer"
 				on:change={selectClass}
 			/>
-			<b>Artificer</b> (can inscribe glyphs on objects for any party member to use)
+			<b>Artificer</b> (can inscribe glyphs on objects for any party member to use) <br />
+			<ul>
+				<li>Start Health: {calcHealth('Artificer')}, Starting Mana: {calcMana('Artificer')}</li>
+				<li>
+					Starts with one utility spell of the player’s choice enchanted to an item of their choice,
+					and one random combat spell.
+				</li>
+			</ul>
 		</label>
 		<label>
 			<input
@@ -200,7 +218,11 @@ Secret Connection: \n${secretConnection}\n
 				value="Demigod"
 				on:change={selectClass}
 			/>
-			<b>Demigod</b> (starts with a massive mana pool and array of combat spells)
+			<b>Demigod</b> (starts with a massive mana pool and array of combat spells)<br />
+			<ul>
+				<li>Start Health: {calcHealth('Demigod')}, Starting Mana: {calcMana('Demigod')}</li>
+				<li>Starts with one combat spell of player’s choice and two random combat spells.</li>
+			</ul>
 		</label>
 		<label>
 			<input
@@ -210,7 +232,14 @@ Secret Connection: \n${secretConnection}\n
 				value="Tinkermage"
 				on:change={selectClass}
 			/>
-			<b>Tinkermage</b> (can learn new spells quickly, but starts with a small mana pool)
+			<b>Tinkermage</b> (can learn new spells quickly, but starts with a small mana pool)<br />
+			<ul>
+				<li>Start Health: {calcHealth('Tinkermage')}, Starting Mana: {calcMana('Tinkermage')}</li>
+				<li>
+					Start's with one utility spell of player’s choice, two random utility spells, and one
+					random combat spell.
+				</li>
+			</ul>
 		</label>
 		<label>
 			<input
@@ -220,7 +249,15 @@ Secret Connection: \n${secretConnection}\n
 				value="Priest"
 				on:change={selectClass}
 			/>
-			<b>Priest</b> (starts with an array of healing spells and can communicate well with locals)
+			<b>Priest</b> (starts with an array of healing spells and can communicate well with locals)<br
+			/>
+			<ul>
+				<li>Start Health: {calcHealth('Priest')}, Starting Mana: {calcMana('Priest')}</li>
+				<li>
+					Start's with one healing spell of player’s choice, one random healing spell, and one
+					random spell.
+				</li>
+			</ul>
 		</label>
 		<label>
 			<input
@@ -230,7 +267,14 @@ Secret Connection: \n${secretConnection}\n
 				value="Grunt"
 				on:change={selectClass}
 			/>
-			<b>Grunt</b> (is very physically capable)
+			<b>Grunt</b> (is very physically capable) <br />
+			<ul>
+				<li>Start Health: {calcHealth('Grunt')}, Starting Mana: {calcMana('Grunt')}</li>
+				<li>
+					Starts with an item of the player’s choice with a combat spell of their choice enchanted
+					to it.
+				</li>
+			</ul>
 		</label>
 		<label>
 			<input
@@ -240,7 +284,12 @@ Secret Connection: \n${secretConnection}\n
 				value="Normie"
 				on:change={selectClass}
 			/>
-			<b>Normie</b> (Unable to vocalize spells or use mana… kinda useless? Idk why you chose this)
+			<b>Normie</b> (Unable to vocalize spells or use mana… kinda useless? Idk why you chose this)<br
+			/>
+			<ul>
+				<li>Start Health: {calcHealth('Normie')}, Starting Mana: {calcMana('Normie')}</li>
+				<li>lol, no.</li>
+			</ul>
 		</label>
 	</div>
 
@@ -347,15 +396,25 @@ Secret Connection: \n${secretConnection}\n
 	{/if}
 
 	<div id={`character-sheet-container-${viewMode}`}>
-		<CharacterSheet bind:characterJSON />
+		<CharacterSheet bind:characterObject />
 	</div>
 
 	{#if characterClass}
 		<div id={`spell-container-${viewMode}`}>
+			<!-- TODO: make default filters a dynamically updated thing based on class selection -->
 			<SpellPicker
 				spells={data.spells}
 				bind:selectedSpells={characterSpells}
-				bind:allowableFilters={allowableSpellFilters}
+				defaultFilters={{
+					3: true,
+					2: false,
+					1: false,
+					S: false,
+					Combat: true,
+					Healing: true,
+					Leveling: true,
+					Utility: true
+				}}
 			/>
 		</div>
 	{/if}

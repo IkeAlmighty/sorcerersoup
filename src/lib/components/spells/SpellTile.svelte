@@ -12,7 +12,7 @@
 </script>
 
 <div class={`spell-container ${spell.type}-spell-type`}>
-	<div>Spell Type: {spell['type']}</div>
+	<div>Spell Type: {spell['type'] ? spell['type'] : 'unknown'}</div>
 	<div>Mana Cost: {spell['mana cost'] || '--'}</div>
 	<div><span>Effect: </span>{spell.effect}</div>
 	{#if buttonText}
