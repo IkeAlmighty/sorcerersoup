@@ -1,5 +1,5 @@
 <script>
-	import CopyIcon from './CopyIcon.svelte';
+	import CopyIcon from '../CopyIcon.svelte';
 
 	export let spell;
 	export let onClick = (e) => {};

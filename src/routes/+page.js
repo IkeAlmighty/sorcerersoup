@@ -35,5 +35,5 @@ export function load({ params }) {
     })
 
     // console.log(data);
-    return { data }
+    return { spells: data }
 }

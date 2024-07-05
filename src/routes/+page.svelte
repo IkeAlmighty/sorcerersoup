@@ -1,8 +1,12 @@
 <script>
 	import { browser } from '$app/environment';
-	import { onMount } from 'svelte';
+	import CharacterSheet from '$lib/components/CharacterSheet.svelte';
+	import SpellPicker from '$lib/components/spells/SpellPicker.svelte';
 
-	onMount(() => console.log('characterJSON: ', window.localStorage.getItem('characterJSON')));
+	export let data;
+
+	$: innerWidth = 0;
+	$: viewMode = innerWidth < 1285 ? 'mobile' : 'desktop';
 
 	let name;
 	let gender;
@@ -34,6 +38,10 @@
 		'Gamblin’'
 	];
 
+	$: allowableSpellFilters = calcCharacterSpellFilters(characterClass, characterSpells);
+
+	let characterSpells = [];
+
 	let characterJSON = {};
 	$: characterJSON = {
 		name,
@@ -51,8 +59,6 @@
 
 	function locallyStoreCharacterJSON(json) {
 		if (!browser) return; // only run on the frontend
-
-		console.log('storing!');
 
 		// overwrite characterJSON to match the current value:
 		window.localStorage.setItem('characterJSON', JSON.stringify(json));
@@ -104,6 +110,45 @@
 		}
 	}
 
+	function calcCharacterSpellFilters(..._dependencies) {
+		console.log('calculating filters');
+		let filters = {};
+
+		console.log('character class:', characterClass);
+		switch (characterClass) {
+			case 'Artificer':
+				filters = {
+					3: true,
+					2: false,
+					1: false,
+					S: false,
+					Combat: true,
+					Healing: false,
+					Leveling: false,
+					Utility: true
+				};
+				break;
+			case 'Priest':
+				filters = {};
+				break;
+			case 'Demigod':
+				filters = {};
+				break;
+			case 'Tinkermage':
+				filters = {};
+				break;
+			case 'Grunt':
+				filters = {};
+				break;
+			case 'Normie':
+				filters = {};
+				break;
+		}
+
+		console.log('new filters:', filters);
+		return filters;
+	}
+
 	function copyCharacterToClipboard() {
 		let character = `
 ## ${name}
@@ -123,6 +168,8 @@ Secret Connection: \n${secretConnection}\n
 			.then(() => alert('Character sheet copied to clipboard!'));
 	}
 </script>
+
+<svelte:window bind:innerWidth />
 
 <div class="container">
 	<div><input type="text" bind:value={name} placeholder="write name here" /></div>
@@ -298,6 +345,20 @@ Secret Connection: \n${secretConnection}\n
 			on:click={copyCharacterToClipboard}
 		/> -->
 	{/if}
+
+	<div id={`character-sheet-container-${viewMode}`}>
+		<CharacterSheet bind:characterJSON />
+	</div>
+
+	{#if characterClass}
+		<div id={`spell-container-${viewMode}`}>
+			<SpellPicker
+				spells={data.spells}
+				bind:selectedSpells={characterSpells}
+				bind:allowableFilters={allowableSpellFilters}
+			/>
+		</div>
+	{/if}
 </div>
 
 <style>
@@ -320,5 +381,25 @@ Secret Connection: \n${secretConnection}\n
 	textarea {
 		width: 100%;
 		min-height: 175px;
+	}
+
+	#spell-container-desktop {
+		position: fixed;
+		top: 0;
+		left: 1rem;
+		width: 400px;
+		height: 100vh;
+		overflow-y: auto;
+	}
+
+	#spell-container-mobile {
+		width: 400px;
+	}
+
+	#character-sheet-container-desktop {
+		width: 400px;
+		position: fixed;
+		top: 1rem;
+		right: 1rem;
 	}
 </style>
