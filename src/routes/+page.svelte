@@ -82,17 +82,17 @@
 
 		switch (_characterClass) {
 			case 'Artificer':
-				return 75;
+				return Math.ceil(75 / 15);
 			case 'Priest':
-				return 75;
+				return Math.ceil(75 / 15);
 			case 'Demigod':
-				return 200;
+				return Math.ceil(200 / 15);
 			case 'Tinkermage':
-				return 55;
+				return Math.ceil(55 / 15);
 			case 'Grunt':
-				return 50;
+				return Math.ceil(50 / 15);
 			case 'Normie':
-				return -300;
+				return Math.ceil(-300 / 15);
 		}
 	}
 
