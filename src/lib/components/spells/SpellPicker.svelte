@@ -79,9 +79,9 @@
 		function determineSpellTier(s) {
 			let manaCost = s['mana cost'];
 			if (!manaCost) return 'S';
-			else if (manaCost < 50) return 3;
-			else if (manaCost < 75) return 2;
-			else if (manaCost < 150) return 1;
+			else if (manaCost < Math.floor(50 / 15)) return 3;
+			else if (manaCost < Math.floor(75 / 15)) return 2;
+			else if (manaCost < Math.floor(150 / 15)) return 1;
 			else return 'S';
 		}
 
