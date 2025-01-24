@@ -76,7 +76,7 @@
 
 		let keywords = JSON.stringify(spell).toLowerCase();
 
-		return keywords.includes(keywords);
+		return keywords.includes(searchBarValue.toLowerCase());
 	}
 
 	function matchesTiers(spell) {
