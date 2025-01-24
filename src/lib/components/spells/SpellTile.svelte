@@ -42,7 +42,7 @@
 	}
 
 	.Healing-spell-type {
-		background-color: #facaf8;
+		background-color: #cafad1;
 	}
 
 	#copyButton {

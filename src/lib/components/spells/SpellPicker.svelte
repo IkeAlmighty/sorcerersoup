@@ -61,10 +61,14 @@
 		tierToggles.forEach((toggle) => {
 			tiersSelected[toggle] = !tiersSelected[toggle];
 		});
+
+		filterSpells();
 	}
 
 	function toggleSpellTypeAndFilter(spellType) {
 		spellTypesSelected[spellType] = !spellTypesSelected[spellType];
+
+		filterSpells();
 	}
 
 	function matchesSearchBarValue(spell) {
