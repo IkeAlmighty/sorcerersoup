@@ -1,8 +1,9 @@
 <script>
-	import SpellGenerator from '$lib/components/spells/SpellGenerator.svelte';
-	let inputString;
+	import SpellPicker from '$lib/components/spells/SpellPicker.svelte';
+	export let data;
+	let selectedSpells = [];
 </script>
 
 <div>
-	<SpellGenerator />
+	<SpellPicker spells={data.spells} bind:selectedSpells />
 </div>

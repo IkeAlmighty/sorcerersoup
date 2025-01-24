@@ -183,6 +183,12 @@ Secret Connection: \n${secretConnection}\n
 <svelte:window bind:innerWidth />
 
 <div class="container">
+	<div>
+		<a
+			href="https://docs.google.com/document/d/1BjNsIqkiIYxQRazCId7gsR_50LfrAyw3F6NOsq4Dkjk/edit?usp=sharing"
+			target="_blank">Click Here to View Game Rules</a
+		>
+	</div>
 	<div><input type="text" bind:value={name} placeholder="write name here" /></div>
 	<div><input type="text" bind:value={gender} placeholder="write gender here" /></div>
 	<div class="mt-2">
