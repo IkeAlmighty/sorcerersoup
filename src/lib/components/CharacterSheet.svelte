@@ -13,28 +13,29 @@
 </script>
 
 <div>
-	<div>{name}</div>
-	<div>{gender}</div>
-	<div>{age}</div>
-	<div>{characterClass}</div>
-	<div>Special Interest: {specialInterest}</div>
-	<div>{vice}</div>
+	<h2><u>Character Sheet</u></h2>
+	<div>{name || ''}</div>
+	<div>{gender || ''}</div>
+	<div>{age ? `${age} years old` : ''}</div>
+	<div>{characterClass || ''}</div>
+	<div>{specialInterest ? `Special Interest: ${specialInterest}` : ''}</div>
+	<div>{vice || ''}</div>
 	<div class="my-2" />
 	<div>
 		<h3>Explanation of Vice:</h3>
-		{viceExplanation}
+		{viceExplanation || ''}
 	</div>
 	<div>
 		<h3>Backstory:</h3>
-		<div>{backstory}</div>
+		<div>{backstory || ''}</div>
 	</div>
 	<div>
 		<h3>Secret Connection:</h3>
-		{secretConnection}
+		{secretConnection || ''}
 	</div>
-	<div>
+	<!-- <div>
 		<h3>Starting Spells:</h3>
-	</div>
+	</div> -->
 </div>
 
 <style>

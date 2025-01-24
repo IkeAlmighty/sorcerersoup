@@ -189,6 +189,10 @@ Secret Connection: \n${secretConnection}\n
 			target="_blank">Click Here to View Game Rules</a
 		>
 	</div>
+
+	<div><a href="/spells" target="_blank">Click Here to Browse Spells</a></div>
+
+	<h1>Character Creator</h1>
 	<div><input type="text" bind:value={name} placeholder="write name here" /></div>
 	<div><input type="text" bind:value={gender} placeholder="write gender here" /></div>
 	<div class="mt-2">
