@@ -56,6 +56,18 @@
 		searchBarValue
 	);
 
+	function shuffleFilteredSpells() {
+		for (let i = filteredData.length - 1; i > 0; i--) {
+			// Generate random index
+			const j = Math.floor(Math.random() * (i + 1));
+
+			// Swap elements at indices i and j
+			const temp = filteredData[i];
+			filteredData[i] = filteredData[j];
+			filteredData[j] = temp;
+		}
+	}
+
 	function toggleTiersSelectedAndFilter(tierToggles) {
 		// toggle checkbox if this function was triggered by clicking one:
 		tierToggles.forEach((toggle) => {
@@ -182,6 +194,8 @@
 			<input type="button" value="Pick a Random Spell" on:click={addRandomSpell} />
 			{#if selectedSpells.length > 0}
 				<input type="button" value="Clear" on:click={(e) => (selectedSpells = [])} />
+			{:else}
+				<input type="button" value="Shuffle Spell List" on:click={shuffleFilteredSpells} />
 			{/if}
 		</div>
 	</div>
